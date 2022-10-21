@@ -11,12 +11,11 @@ X, y = load_iris(return_X_y=True, as_frame=True)
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=RANDOM_STATE)
 
 model = GradientBoostingClassifier(random_state=RANDOM_STATE)
-model.fit(X_train, y_train)
+model.fit(X_train.values, y_train.values)
 
-y_pred = model.predict(X_test)
 
-train_score = f1_score(y_train, model.predict(X_train), average="weighted")
-test_score = f1_score(y_test, model.predict(X_test), average="weighted")
+train_score = f1_score(y_train, model.predict(X_train.values), average="weighted")
+test_score = f1_score(y_test, model.predict(X_test.values), average="weighted")
 
 print(f"Train f1-score: {train_score}")
 print(f"Test f1-score: {test_score}")
@@ -24,5 +23,3 @@ print(f"Test f1-score: {test_score}")
 model_path = "../models/iris_v1.joblib"
 dump(model, model_path)
 model = load(model_path)
-
-print(model.predict([[1, 1, 1, 1]]))
